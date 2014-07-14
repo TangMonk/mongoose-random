@@ -45,6 +45,19 @@ module.exports = function (options) {
         if (typeof callback === 'function') callback(null);
       });
     }
+
+    schema.statics.queryRandom = function () {
+      var self = this;
+      query = {};
+
+      query[path] = query[path] || {
+        $near: {
+          $geometry: { type: 'Point', coordinates: randCoords() }
+        }
+      };
+
+      return self.find(query)
+    }
   }
 
   return random;
